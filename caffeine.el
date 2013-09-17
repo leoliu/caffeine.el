@@ -26,9 +26,12 @@
 ;; Caffeine - http://lightheadsw.com/caffeine - is a small app to keep
 ;; your Mac awake. This package provides a button in the modeline to
 ;; control Caffeine which can be handy when using emacs in fullscreen
-;; mode.
+;; mode. Function `do-applescript' is required.
 ;;
-;; This package requires function `do-applescript' to work.
+;; To Install:
+;;
+;;   (when (fboundp 'do-applescript)
+;;     (run-with-idle-timer 0.25 nil #'caffeine-mode 1))
 
 ;;; Code:
 

@@ -8,3 +8,10 @@ button in the mode line to control Caffeine which can be handy when
 using emacs in fullscreen mode.
 
 This package requires function ``do-applescript`` to work.
+
+screenshot
+~~~~~~~~~~
+
+.. figure:: http://i.imgur.com/mZOphKk.png
+   :target: http://i.imgur.com/mZOphKk.png
+   :alt:    Caffeine-active.png
