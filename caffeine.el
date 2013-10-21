@@ -82,9 +82,11 @@ end tell"
            caffeine-default-duration))
   (caffeine-mode-line-update))
 
-(defvar caffeine-mode-line-map
+(defvar caffeine-mode-map
   (let ((map (make-sparse-keymap))
         (menu (make-sparse-keymap "Activate Caffeine for")))
+    ;; Use Command + Option + K to acivate Caffeine.
+    (define-key map (kbd "M-˚") 'caffeine-toggle)
     (mapc
      (lambda (x)
        (define-key menu (vector (nth 1 x))
@@ -127,7 +129,7 @@ end tell"
                   ;; status may be out-of-sync. Update it first.
                   (caffeine-mode-line-update)
                   (concat "Caffeine is " (if caffeine-active-p "on" "off")))
-               'keymap caffeine-mode-line-map))
+               'keymap caffeine-mode-map))
   (when (timerp caffeine-mode-timer)
     (cancel-timer caffeine-mode-timer))
   (setq caffeine-mode-timer nil)
