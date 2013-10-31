@@ -80,7 +80,9 @@ count (every process whose name is \"Caffeine\")")))
  active
 end tell"
            caffeine-default-duration))
-  (caffeine-mode-line-update))
+  (caffeine-mode-line-update)
+  (when (called-interactively-p 'interactive)
+    (message "Caffeine is %s." (if caffeine-active-p "on" "off"))))
 
 (defvar caffeine-mode-map
   (let ((map (make-sparse-keymap))
