@@ -135,12 +135,15 @@ end tell"
   (when (timerp caffeine-mode-timer)
     (cancel-timer caffeine-mode-timer))
   (setq caffeine-mode-timer nil)
-  (when caffeine-mode
-    (caffeine-mode-line-update)
-    (setq caffeine-mode-timer
-          (run-with-idle-timer caffeine-mode-line-update-interval
-                               t
-                               #'caffeine-mode-line-update))))
+  (if caffeine-mode
+      (progn
+        (caffeine-mode-line-update)
+        (setq caffeine-mode-timer
+              (run-with-idle-timer caffeine-mode-line-update-interval
+                                   t
+                                   #'caffeine-mode-line-update))
+        (add-hook 'buffer-list-update-hook #'caffeine-mode-line-update))
+    (remove-hook 'buffer-list-update-hook #'caffeine-mode-line-update)))
 
 (provide 'caffeine)
 ;;; caffeine.el ends here
