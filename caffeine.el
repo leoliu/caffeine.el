@@ -1,6 +1,6 @@
 ;;; caffeine.el --- control Caffeine from emacs      -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2013  Leo Liu
+;; Copyright (C) 2013-2014  Leo Liu
 
 ;; Author: Leo Liu <sdl.web@gmail.com>
 ;; Version: 1.0
@@ -68,18 +68,26 @@ count (every process whose name is \"Caffeine\")")))
                       "true")))
     (force-mode-line-update 'all)))
 
-(defun caffeine-toggle ()
-  (interactive)
-  (do-applescript
-   (format "tell application \"Caffeine\"
- if it is active then
+(defun caffeine-toggle (&optional arg)
+  (interactive (list (or current-prefix-arg 'toggle)))
+  (let ((how (cond ((eq arg 'toggle) "toggle")
+                   ((< (prefix-numeric-value arg) 0) "off")
+                   (t "on"))))
+    (do-applescript
+     (format "tell application \"Caffeine\"
+ if \"%s\" is \"toggle\" then
+  if it is active then
+   turn off
+  else
+   turn on for %d
+  end if
+ else if \"%s\" is \"off\"
   turn off
  else
   turn on for %d
  end if
- active
 end tell"
-           caffeine-default-duration))
+             how caffeine-default-duration how caffeine-default-duration)))
   (caffeine-mode-line-update)
   (when (called-interactively-p 'interactive)
     (message "Caffeine is %s." (if caffeine-active-p "on" "off"))))
